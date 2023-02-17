@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "name": "Popsugar Edit Tools",
+    "description": "Add helpful links to Popsugar pages for editorial users",
+    "version": "1.0",
+    "action": {
+        "default_popup": "hello.html",
+        "default_icon": "ps_logo.png"
+    },
+    "content_scripts": [
+        {
+            "js": ["scripts/addStyles.js", "scripts/toolbar.js"],
+            "matches": [
+                "https://popsugar.com/*"
+            ]
+        }
+    ],
+    "permissions": ["scripting"]
+}
