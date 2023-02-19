@@ -1,0 +1,15 @@
+.ps-edit-toolbar {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
+    gap: 10px;
+}
+
+.ps-edit-toolbar.hidden {
+    visibility: hidden;
+}
+
+.ps-edit-toolbar img {
+    height: 16px;
+}
