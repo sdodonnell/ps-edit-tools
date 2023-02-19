@@ -12,15 +12,12 @@
         "48": "images/ps-brand-mark.png",
         "128": "images/ps-brand-mark.png"
     },
-    "permissions": [
-        "tabs",
-        "scripting"
-    ],
     "content_scripts": [
         {
             "js": [
                 "scripts/toolbar.js"
             ],
+            "css": [ "stylesheet.css" ],
             "matches": [
                 "https://popsugar.com/*",
                 "https://*.popsugar.com/*",
@@ -28,15 +25,6 @@
                 "http://dev.popsugar.com:3002/*"
             ]
         }
-    ],
-    "background": {
-        "service_worker": "background.js"
-    },
-    "host_permissions": [
-        "https://popsugar.com/*",
-        "https://*.popsugar.com/*",
-        "https://*.onsugar.com/*",
-        "http://dev.popsugar.com:3002/*"
     ],
     "web_accessible_resources": [
         {

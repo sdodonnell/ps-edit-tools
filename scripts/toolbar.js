@@ -45,8 +45,10 @@ if (window.innerWidth > 768) {
     // Get nid from current page
     const nid = window.location.href.split('-').reverse()[0];
 
+    const toolbarContainer = document.createElement('div');
+    toolbarContainer.classList.add('ps-edit-toolbar', 'hide');
     const toolbar = document.createElement('div');
-    toolbar.classList.add('ps-edit-toolbar', 'hidden');
+    toolbarContainer.appendChild(toolbar);
 
     Object.values(toolbarItems).forEach(item => {
         if (item.show) {
@@ -62,13 +64,13 @@ if (window.innerWidth > 768) {
     })
 
     const header = document.querySelector('.article-header');
-    header.insertBefore(toolbar, header.firstChild);
+    header.insertBefore(toolbarContainer, header.firstChild);
 
-    // header.addEventListener("mouseenter", (e) => {
-    //     e.target.classList.remove('hidden');
-    // })
+    toolbarContainer.addEventListener("pointerenter", (e) => {
+        e.target.classList.remove('hide');
+    })
 
-    // header.addEventListener("mouseleave", (e) => {
-    //     e.target.classList.add('hidden');
-    // })
+    toolbarContainer.addEventListener("pointerleave", (e) => {
+        e.target.classList.add('hide');
+    })
 }

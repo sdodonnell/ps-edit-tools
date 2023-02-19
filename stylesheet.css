@@ -1,12 +1,15 @@
 .ps-edit-toolbar {
-    display: flex;
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.ps-edit-toolbar > div {
+    display: flex;
     gap: 10px;
 }
 
-.ps-edit-toolbar.hidden {
+.ps-edit-toolbar.hide > div {
     visibility: hidden;
 }
 
