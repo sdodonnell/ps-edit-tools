@@ -1,11 +1,12 @@
 {
     "manifest_version": 3,
     "name": "Popsugar Edit Tools",
-    "description": "Add helpful links to Popsugar pages for editorial users",
-    "version": "1.0",
+    "description": "Add helpful links to Popsugar pages for editorial users.",
+    "version": "0.0.1",
     "action": {
         "default_icon": "images/ps-brand-mark.png"
     },
+    "permissions": ["tabs"],
     "icons": {
         "16": "images/ps-brand-mark.png",
         "32": "images/ps-brand-mark.png",
@@ -26,6 +27,9 @@
             ]
         }
     ],
+    "background": {
+        "service_worker": "scripts/background.js"
+      },
     "web_accessible_resources": [
         {
             "resources": [

@@ -5,48 +5,107 @@
 const header = document.querySelector('.article-header');
 let isShowing = false;
 
-// Functions to generate helpful links based on current page
-const getAmpUrl = (nid) => {
-    return `https://popsugar.com/${nid}/amp`
+
+/**
+ * Link getters
+ */
+
+// Functions to generate helpful links based on current page.
+// These will either return a string or a function. A string will be
+// a URL; a function will send a message to the extension service
+// worker that will open a new window.
+const getAppleNewsUrl = () => {
+    const url = window.location.href
+    return async () => {
+        const data = {
+            type: 'appleNews',
+            url
+        }
+
+        await chrome.runtime.sendMessage(data);
+    }
 }
+
+const getAmpUrl = (_, path, host) => {
+    return `${host}/amphtml/${path}`
+}
+
+const getMobileUrl = () => {
+    const url = window.location.href
+    return async () => {
+        const data = {
+            type: 'mobile',
+            url
+        }
+
+        await chrome.runtime.sendMessage(data);
+    }
+}
+
+const getAnalyticsUrl = nid => {
+    return `https://popsugar.com/dashboard/analytics/overview?nid=${nid}`
+}
+
+const getTimersUrl = nid => {
+    return `https://popsugar.com/${nid}/edit?#publishing_options`
+}
+
+const getEditUrl = nid => {
+    return `https://popsugar.com/${nid}/edit`
+}
+
+/**
+ * Helpers
+ */
+
+const isLocal = host => host.includes('dev.popsugar.com');
+const isStaging = host => host.includes('.p3.staging.popsugar.com');
 
 // Don't add toolbar on mobile, or on non-node pages
 if (header && window.innerWidth > 768) {
     const toolbarItems = {
         appleNews: {
             show: true,
-            getLink: () => { },
-            image: 'images/something.png'
+            getLink: getAppleNewsUrl,
+            image: 'images/apple-news.png',
+            title: 'Apple News Link'
         },
         amp: {
             show: true,
             getLink: getAmpUrl,
-            image: 'images/something.png'
+            image: 'images/flash.png',
+            title: 'AMP preview'
         },
         mobile: {
             show: true,
-            getLink: () => { },
-            image: 'images/something.png'
+            getLink: getMobileUrl,
+            image: 'images/iphone.png',
+            title: 'Mobile preview'
         },
         analytics: {
             show: true,
-            getLink: () => { },
-            image: 'images/something.png'
+            getLink: getAnalyticsUrl,
+            image: 'images/analytics.png',
+            title: 'Analytics dashboard'
         },
         timers: {
             show: true,
-            getLink: () => { },
-            image: 'images/something.png'
+            getLink: getTimersUrl,
+            image: 'images/clock.png',
+            title: 'View timers'
         },
         edit: {
             show: true,
-            getLink: () => { },
-            image: 'images/something.png'
+            getLink: getEditUrl,
+            image: 'images/edit.png',
+            title: 'Edit post'
         },
     }
 
     // Get nid from current page
-    const nid = window.location.href.split('-').reverse()[0];
+    const nid = window.location.pathname.split('-').reverse()[0];
+    const path = window.location.pathname;
+    const host = window.location.origin;
 
     // Create toolbar DOM node
     const toolbarContainer = document.createElement('div');
@@ -58,7 +117,15 @@ if (header && window.innerWidth > 768) {
     Object.values(toolbarItems).forEach(item => {
         if (item.show) {
             const toolbarItem = document.createElement('a');
-            toolbarItem.href = item.getLink(nid);
+            toolbarItem.title = item.title;
+            toolbarItem.target = "_blank";
+
+            const getter = item.getLink(nid, path, host);
+            if (typeof getter === 'function') {
+                toolbarItem.onclick = getter;
+            } else {
+                toolbarItem.href = getter;
+            }
 
             const toolbarItemImage = document.createElement('img');
             toolbarItemImage.src = chrome.runtime.getURL(item.image);
