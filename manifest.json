@@ -17,7 +17,7 @@
             "js": [
                 "scripts/toolbar.js"
             ],
-            "css": [ "stylesheet.css" ],
+            "css": [ "toolbar.css" ],
             "matches": [
                 "https://popsugar.com/*",
                 "https://*.popsugar.com/*",

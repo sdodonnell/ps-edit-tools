@@ -2,13 +2,15 @@
  * Code to insert tooltip icons above the header of PS nodes
  **/
 
+const header = document.querySelector('.article-header');
+
 // Functions to generate helpful links based on current page
 const getAmpUrl = (nid) => {
     return `https://popsugar.com/${nid}/amp`
 }
 
-// Don't add toolbar on mobile
-if (window.innerWidth > 768) {
+// Don't add toolbar on mobile, or on non-node pages
+if (header && window.innerWidth > 768) {
     const toolbarItems = {
         appleNews: {
             show: true,
@@ -63,7 +65,6 @@ if (window.innerWidth > 768) {
         }
     })
 
-    const header = document.querySelector('.article-header');
     header.insertBefore(toolbarContainer, header.firstChild);
 
     toolbarContainer.addEventListener("pointerenter", (e) => {
