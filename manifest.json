@@ -6,6 +6,7 @@
     "action": {
         "default_icon": "images/ps-brand-mark.png"
     },
+    "permissions": ["tabs"],
     "icons": {
         "16": "images/ps-brand-mark.png",
         "32": "images/ps-brand-mark.png",
@@ -26,6 +27,9 @@
             ]
         }
     ],
+    "background": {
+        "service_worker": "scripts/background.js"
+      },
     "web_accessible_resources": [
         {
             "resources": [

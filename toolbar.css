@@ -15,4 +15,9 @@
 
 .ps-edit-toolbar img {
     height: 16px;
+    opacity: 0.5;
+}
+
+.ps-edit-toolbar img:hover {
+    opacity: 1;
 }
