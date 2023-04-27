@@ -1,6 +1,6 @@
 /**
  * Code to insert tooltip icons above the header of PS nodes
- **/
+ */
 
 const header = document.querySelector('.article-header');
 let isShowing = false;
