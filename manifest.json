@@ -15,8 +15,7 @@
     "content_scripts": [
         {
             "js": [
-                "scripts/toolbar.js",
-                "scripts/image-override.js"
+                "scripts/toolbar.js"
             ],
             "css": [ "toolbar.css" ],
             "matches": [
