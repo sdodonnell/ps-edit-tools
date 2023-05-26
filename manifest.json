@@ -16,6 +16,7 @@
     "content_scripts": [
         {
             "js": [
+                "scripts/utils.js",
                 "scripts/toolbar.js",
                 "scripts/gallery-slides.js"
             ],

@@ -1,10 +1,8 @@
 /**
  * Code to insert tooltip icons above the header of PS nodes
  **/
-
 const header = document.querySelector('.article-header');
-let isShowing = false;
-
+let isToolbarShowing = false;
 
 /**
  * Link getters
@@ -15,14 +13,23 @@ let isShowing = false;
 // a URL; a function will send a message to the extension service
 // worker that will open a new window.
 const getAppleNewsUrl = () => {
-    const url = window.location.href
-    return async () => {
-        const data = {
-            type: 'appleNews',
-            url
-        }
+    const nextData = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerText || '{}');
+    const appleNewsId = nextData?.props?.pageProps?.page?.apple_news_id;
 
-        await chrome.runtime.sendMessage(data);
+    if (appleNewsId) {
+        const apiUrl = `https://popsugar.com/api/news/getarticle?uid=${appleNewsId}`;
+
+        return async () => {
+            const apiResponse = await fetch(apiUrl);
+            const apiResponseJson = await apiResponse.json();
+            const url = apiResponseJson.url;
+            const data = {
+                type: 'appleNews',
+                url
+            }
+
+            await chrome.runtime.sendMessage(data);
+        }
     }
 }
 
@@ -102,49 +109,24 @@ if (header && window.innerWidth > 768) {
         },
     }
 
-    // Get nid from current page
-    const nid = window.location.pathname.split('-').reverse()[0];
-    const path = window.location.pathname;
-    const host = window.location.origin;
-
     // Create toolbar DOM node
     const toolbarContainer = document.createElement('div');
     toolbarContainer.classList.add('ps-edit-toolbar', 'hide');
     const toolbar = document.createElement('div');
     toolbarContainer.appendChild(toolbar);
 
-    // Generate toolbar items and add to parent DOM node
-    Object.values(toolbarItems).forEach(item => {
-        if (item.show) {
-            const toolbarItem = document.createElement('a');
-            toolbarItem.title = item.title;
-            toolbarItem.target = "_blank";
-
-            const getter = item.getLink(nid, path, host);
-            if (typeof getter === 'function') {
-                toolbarItem.onclick = getter;
-            } else {
-                toolbarItem.href = getter;
-            }
-
-            const toolbarItemImage = document.createElement('img');
-            toolbarItemImage.src = chrome.runtime.getURL(item.image);
-
-            toolbarItem.appendChild(toolbarItemImage);
-            toolbar.appendChild(toolbarItem);
-        }
-    })
+    addLinksToToolbar(toolbarItems, toolbar)
 
     header.insertBefore(toolbarContainer, header.firstChild);
 
     const hideToolbar = () => {
         toolbarContainer.classList.add('hide');
-        isShowing = false;
+        isToolbarShowing = false;
     }
 
     const showToolbar = () => {
         toolbarContainer.classList.remove('hide');
-        isShowing = true;
+        isToolbarShowing = true;
     }
 
     const addEventListeners = () => {
@@ -158,10 +140,10 @@ if (header && window.innerWidth > 768) {
     }
 
     window.addEventListener('keydown', e => {
-        if (e.key === '?' && !isShowing) {
+        if (e.key === '?' && !isToolbarShowing) {
             showToolbar();
             removeEventListeners();
-        } else if (e.key === '?' && isShowing) {
+        } else if (e.key === '?' && isToolbarShowing) {
             hideToolbar();
             addEventListeners();
         }

@@ -26,12 +26,12 @@
     position: absolute;
     top: 0;
     left: -15px;
-}
-
-.ps-gallery-slide-toolbar.hide {
-    // visibility: hidden;
     width: 15px;
     height: 100px;
     border: 1px solid black;
+}
+
+.ps-gallery-slide-toolbar.hide {
+    visibility: hidden;
 }
 
