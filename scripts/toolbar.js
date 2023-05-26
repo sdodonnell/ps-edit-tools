@@ -5,13 +5,6 @@
     const header = document.querySelector('.article-header');
     let isShowing = false;
     
-    /**
-     * Helpers
-     */
-    
-    const isLocal = host => host.includes('dev.popsugar.com');
-    const isStaging = host => host.includes('.p3.staging.popsugar.com');
-    
     // Don't add toolbar on mobile, or on non-node pages
     if (header && window.innerWidth > 768) {
         const toolbarItems = {

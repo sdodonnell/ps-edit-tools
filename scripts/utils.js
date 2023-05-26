@@ -1,7 +1,17 @@
-// Get nid from current page
+/**
+ * Global variables
+ */
+
 const nid = window.location.pathname.split('-').reverse()[0];
 const path = window.location.pathname;
 const host = window.location.origin;
+
+/**
+ * Helpers
+ */
+
+const isLocal = host => host.includes('dev.popsugar.com');
+const isStaging = host => host.includes('.p3.staging.popsugar.com');
 
 /**
  * Link getters
@@ -78,7 +88,7 @@ const addLinksToToolbar = (toolbarItems, toolbar) => {
             const getter = item.getLink(nid, path, host);
             if (typeof getter === 'function') {
                 toolbarItem.onclick = getter;
-            } else {
+            } else if (getter) {
                 toolbarItem.href = getter;
             }
 
