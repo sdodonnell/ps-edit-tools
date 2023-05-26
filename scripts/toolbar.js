@@ -15,15 +15,26 @@ let isShowing = false;
 // a URL; a function will send a message to the extension service
 // worker that will open a new window.
 const getAppleNewsUrl = () => {
-    const url = window.location.href
-    return async () => {
-        const data = {
-            type: 'appleNews',
-            url
-        }
+    const nextData = JSON.parse(document.getElementById('__NEXT_DATA__')?.innerText || '{}');
+    const appleNewsId = nextData?.props?.pageProps?.page?.apple_news_id;
 
-        await chrome.runtime.sendMessage(data);
+    if (appleNewsId) {
+        const apiUrl = `https://popsugar.com/api/news/getarticle?uid=${appleNewsId}`;
+
+        return async () => {
+            const apiResponse = await fetch(apiUrl);
+            const apiResponseJson = await apiResponse.json();
+            const url = apiResponseJson.url;
+            const data = {
+                type: 'appleNews',
+                url
+            }
+    
+            await chrome.runtime.sendMessage(data);
+        }
     }
+
+    return null;
 }
 
 const getAmpUrl = (_, path, host) => {
