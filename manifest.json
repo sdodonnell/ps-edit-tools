@@ -16,7 +16,9 @@
     "content_scripts": [
         {
             "js": [
-                "scripts/toolbar.js"
+                "scripts/utils.js",
+                "scripts/toolbar.js",
+                "scripts/gallery-slides.js"
             ],
             "css": [ "toolbar.css" ],
             "matches": [
