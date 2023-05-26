@@ -25,13 +25,20 @@
 .ps-gallery-slide-toolbar {
     position: absolute;
     top: 0;
-    left: -15px;
+    left: -20px;
     width: 15px;
-    height: 100px;
-    border: 1px solid black;
+    font-family: 'VisbyCF';
+    font-weight: bold;
 }
 
-.ps-gallery-slide-toolbar.hide {
+.ps-gallery-slide-toolbar > div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+}
+
+.ps-gallery-slide-toolbar.hide > div {
     visibility: hidden;
 }
 
