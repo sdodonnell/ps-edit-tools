@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Popsugar Edit Tools",
     "description": "Add helpful links to Popsugar pages for editorial users.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "action": {
         "default_icon": "images/ps-brand-mark.png"
     },
