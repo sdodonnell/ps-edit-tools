@@ -29,7 +29,7 @@
         toolbarItem.href = getImageEditUrl(nid, imageNid, index);
 
         const toolbarItemImage = document.createElement('img');
-        toolbarItemImage.src = chrome.runtime.getURL('images/edit.png');
+        toolbarItemImage.src = chrome.runtime.getURL('images/camera.png');
 
         toolbarItem.appendChild(toolbarItemImage);
         toolbar.insertBefore(toolbarItem, toolbar.childNodes[2]);
@@ -44,7 +44,7 @@
         toolbarItem.href = getImageSizesUrl(imageNid);
 
         const toolbarItemImage = document.createElement('img');
-        toolbarItemImage.src = chrome.runtime.getURL('images/edit.png');
+        toolbarItemImage.src = chrome.runtime.getURL('images/photo.png');
 
         toolbarItem.appendChild(toolbarItemImage);
         toolbar.insertBefore(toolbarItem, toolbar.childNodes[3]);
@@ -77,7 +77,7 @@
                 addPhotos: {
                     show: true,
                     getLink: getAddPhotosUrl,
-                    image: 'images/edit.png',
+                    image: 'images/plus.png',
                     title: 'Add Photos'
                 }
             }

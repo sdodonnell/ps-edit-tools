@@ -31,6 +31,14 @@
     font-weight: bold;
 }
 
+.ps-gallery-slide-toolbar img {
+    opacity: 0.5;
+}
+
+.ps-gallery-slide-toolbar img:hover {
+    opacity: 1;
+}
+
 .ps-gallery-slide-toolbar > div {
     display: flex;
     flex-direction: column;
